@@ -39,21 +39,21 @@ public class Locator {
         houses.add(new House(22, new LocatedAt(25.5, 87.66666666666667), "Kathihar", "Bihar"));
         houses.add(new House(23, new LocatedAt(26.166666666666668, 87.03333333333333), "Kishanganj", "Bihar"));
         houses.add(new House(24, new LocatedAt(23.666666666666668, 84.55), "Mankheri", "Bihar"));
-        houses.add(new House(25, new LocatedAt(25.4, 85.91666666666667), "Mokameh", "Bihar"));
-        houses.add(new House(26, new LocatedAt(26.666666666666668, 85.23333333333333), "Motihari", "Bihar"));
-        houses.add(new House(27, new LocatedAt(25.383333333333333, 86.5), "Munger", "Bihar"));
-        houses.add(new House(28, new LocatedAt(26.116666666666667, 85.45), "Muzaffarpur", "Bihar"));
-        houses.add(new House(29, new LocatedAt(24.883333333333333, 85.58333333333333), "Nawada", "Bihar"));
-        houses.add(new House(30, new LocatedAt(24.5, 87.33333333333333), "Naya Dumka", "Bihar"));
-        houses.add(new House(31, new LocatedAt(25.616666666666667, 85.21666666666667), "Patna", "Bihar"));
-        houses.add(new House(32, new LocatedAt(25.816666666666666, 87.51666666666667), "Purnia", "Bihar"));
-        houses.add(new House(33, new LocatedAt(22.266666666666666, 85.25), "Safanda", "Bihar"));
-        houses.add(new House(34, new LocatedAt(26.783333333333335, 84.8), "Sagaull", "Bihar"));
-        houses.add(new House(35, new LocatedAt(25.916666666666668, 86.58333333333333), "Saharsa", "Bihar"));
-        houses.add(new House(36, new LocatedAt(25.916666666666668, 85.08333333333333), "Samastipur", "Bihar"));
-        houses.add(new House(37, new LocatedAt(24.95, 84.05), "Sasaram", "Bihar"));
-        houses.add(new House(38, new LocatedAt(25.15, 85.88333333333334), "Shelkhupura", "Bihar"));
-        houses.add(new House(39, new LocatedAt(24.95, 84.88333333333334), "Tekari", "Bihar"));
+//        houses.add(new House(25, new LocatedAt(25.4, 85.91666666666667), "Mokameh", "Bihar"));
+//        houses.add(new House(26, new LocatedAt(26.666666666666668, 85.23333333333333), "Motihari", "Bihar"));
+//        houses.add(new House(27, new LocatedAt(25.383333333333333, 86.5), "Munger", "Bihar"));
+//        houses.add(new House(28, new LocatedAt(26.116666666666667, 85.45), "Muzaffarpur", "Bihar"));
+//        houses.add(new House(29, new LocatedAt(24.883333333333333, 85.58333333333333), "Nawada", "Bihar"));
+//        houses.add(new House(30, new LocatedAt(24.5, 87.33333333333333), "Naya Dumka", "Bihar"));
+//        houses.add(new House(31, new LocatedAt(25.616666666666667, 85.21666666666667), "Patna", "Bihar"));
+//        houses.add(new House(32, new LocatedAt(25.816666666666666, 87.51666666666667), "Purnia", "Bihar"));
+//        houses.add(new House(33, new LocatedAt(22.266666666666666, 85.25), "Safanda", "Bihar"));
+//        houses.add(new House(34, new LocatedAt(26.783333333333335, 84.8), "Sagaull", "Bihar"));
+//        houses.add(new House(35, new LocatedAt(25.916666666666668, 86.58333333333333), "Saharsa", "Bihar"));
+//        houses.add(new House(36, new LocatedAt(25.916666666666668, 85.08333333333333), "Samastipur", "Bihar"));
+//        houses.add(new House(37, new LocatedAt(24.95, 84.05), "Sasaram", "Bihar"));
+//        houses.add(new House(38, new LocatedAt(25.15, 85.88333333333334), "Shelkhupura", "Bihar"));
+//        houses.add(new House(39, new LocatedAt(24.95, 84.88333333333334), "Tekari", "Bihar"));
 
         return houses;
     }
@@ -83,16 +83,18 @@ public class Locator {
         djikstra.dijkstra(adj, start.getId());
 
         System.out.println("The Shortest Path from node : ");
-        for (int i = 0; i < djikstra.dist.length; i++) {
-            System.out.println(start.getId() + " to " + i + " is "
-                    + djikstra.dist[i]);
-        }
+//        for (int i = 0; i < djikstra.dist.length; i++) {
+//            System.out.println(start.getId() + " to " + i + " is "
+//                    + djikstra.dist[i]);
+//        }
+        djikstra.printSolution(start.getId(),djikstra.dist,djikstra.parent);
     }
 
 }
 
 class Djikstra {
-    float dist[];
+    float[] dist;
+    int[] parent;
     private Set<Integer> settled;
     private PriorityQueue<Node> pq;
     private int V;
@@ -101,8 +103,9 @@ class Djikstra {
     public Djikstra(int V) {
         this.V = V;
         dist = new float[V];
+        parent = new int[V];
         settled = new HashSet<>();
-        pq = new PriorityQueue<>(V,new Node());
+        pq = new PriorityQueue<>(V, new Node());
     }
 
     public void dijkstra(List<List<Node>> adj, int src) {
@@ -110,6 +113,7 @@ class Djikstra {
         for (int i = 0; i < V; i++)
             dist[i] = Integer.MAX_VALUE;
         pq.add(new Node(src, 0));
+        parent[src] = -1;
 
         dist[src] = 0;
         while (settled.size() != V) {
@@ -130,12 +134,42 @@ class Djikstra {
                 edgeDistance = v.cost;
                 newDistance = dist[u] + edgeDistance;
 
-                if (newDistance < dist[v.node])
+                if (newDistance < dist[v.node]) {
                     dist[v.node] = newDistance;
+                    parent[v.node] = u;
+                }
 
                 pq.add(new Node(v.node, dist[v.node]));
             }
         }
+    }
+
+    void printSolution(int startVertex, float[] distances, int[] parents) {
+        int nVertices = distances.length;
+        System.out.print("Vertex\t Distance\tPath");
+
+        for (int vertexIndex = 0;
+             vertexIndex < nVertices;
+             vertexIndex++) {
+            if (vertexIndex != startVertex) {
+                System.out.print("\n" + startVertex + " -> ");
+                System.out.print(vertexIndex + " \t\t ");
+                System.out.print(distances[vertexIndex] + "\t\t");
+                printPath(vertexIndex, parents);
+            }
+        }
+    }
+
+    void printPath(int currentVertex,
+                   int[] parents) {
+
+        // Base case : Source node has
+        // been processed
+        if (currentVertex == -1) {
+            return;
+        }
+        printPath(parents[currentVertex], parents);
+        System.out.print(currentVertex + " ");
     }
 }
 
@@ -144,7 +178,8 @@ class Node implements Comparator<Node> {
     public int node;
     public float cost;
 
-    public Node(){}
+    public Node() {
+    }
 
     public Node(int node, float cost) {
         this.node = node;
