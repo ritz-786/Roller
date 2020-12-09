@@ -2,6 +2,7 @@ package com.example.roller;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 //
 //        Locator locator = new Locator();
 //        locator.initiator(house);
+
 
 
         bnv = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);

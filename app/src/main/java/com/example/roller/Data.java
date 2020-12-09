@@ -54,4 +54,12 @@ public class Data {
 
         return houses;
     }
+
+    private int getIdByCity(String name) throws Exception {
+        for(House house: getHouses()){
+            if(house.getCity().equals(name))
+                return house.getId();
+        }
+        throw new Exception("No City Found");
+    }
 }
