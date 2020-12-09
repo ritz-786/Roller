@@ -1,7 +1,7 @@
-package com.example.packaginglibrary;
+package com.example.roller;
 
-import com.example.packaginglibrary.domain.House;
-import com.example.packaginglibrary.domain.LocatedAt;
+import com.example.roller.domain.House;
+import com.example.roller.domain.LocatedAt;
 
 import java.util.ArrayList;
 import java.util.Comparator;

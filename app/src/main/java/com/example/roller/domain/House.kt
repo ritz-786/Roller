@@ -1,4 +1,4 @@
-package com.example.packaginglibrary.domain
+package com.example.roller.domain
 
 data class House(
     val id: Int,

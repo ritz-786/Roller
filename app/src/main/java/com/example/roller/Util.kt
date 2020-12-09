@@ -1,7 +1,7 @@
-package com.example.packaginglibrary
+package com.example.roller
 
 import android.location.Location
-import com.example.packaginglibrary.domain.LocatedAt
+import com.example.roller.domain.LocatedAt
 import kotlin.math.acos
 import kotlin.math.cos
 import kotlin.math.sin

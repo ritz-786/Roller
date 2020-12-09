@@ -2,9 +2,8 @@ package com.example.roller
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.packaginglibrary.Locator
-import com.example.packaginglibrary.domain.House
-import com.example.packaginglibrary.domain.LocatedAt
+import com.example.roller.domain.House
+import com.example.roller.domain.LocatedAt
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
