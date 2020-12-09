@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/warehouse"
+        android:icon="@drawable/warehouse_24"
+        android:title="Warehouse" />
+
+    <item android:id="@+id/retailer"
+        android:icon="@drawable/retailer_24"
+        android:title="Retailer" />
+
+    <item android:id="@+id/user"
+        android:icon="@drawable/ic_baseline_face_24"
+        android:title="User" />
+
+
+</menu>

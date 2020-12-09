@@ -1,5 +1,7 @@
 package com.example.roller;
 
+import android.util.Log;
+
 import com.example.roller.domain.House;
 import com.example.roller.domain.LocatedAt;
 
@@ -85,6 +87,7 @@ public class Locator {
         djikstra.dijkstra(adj, start.getId());
 
         System.out.println("The Shortest Path from node : ");
+        Log.d("MyString", "The Shortest Path from node : ");
 //        for (int i = 0; i < djikstra.dist.length; i++) {
 //            System.out.println(start.getId() + " to " + i + " is "
 //                    + djikstra.dist[i]);
