@@ -4,6 +4,7 @@ import com.example.roller.domain.House;
 import com.example.roller.domain.LocatedAt;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Data {
@@ -55,11 +56,29 @@ public class Data {
         return houses;
     }
 
-    private int getIdByCity(String name) throws Exception {
+    private HashMap<String,House> getIdByCity(){
+        HashMap<String,House> directory = new HashMap<>();
         for(House house: getHouses()){
-            if(house.getCity().equals(name))
-                return house.getId();
+            directory.put(house.getCity().toLowerCase(),house);
         }
-        throw new Exception("No City Found");
+        return directory;
+    }
+
+    void connectCities(){
+        try {
+            HashMap<String,House> directory = getIdByCity();
+            HashMap<Integer, List<Node>> adj = new HashMap<>();
+            House h = directory.get("arrah");
+            House h1 = directory.get("hajipur");
+            assert h != null;
+            assert h1 != null;
+            Node newNode = new Node(h.getId(),Util.findDistance(h.getLocation(),h1.getLocation()));
+            List<Node> n = new ArrayList<>();
+            n.add(newNode);
+
+            adj.put(h.getId(),n);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
