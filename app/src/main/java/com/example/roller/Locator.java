@@ -14,7 +14,9 @@ public class Locator {
 
     List<House> getHouses() {
         List<House> houses = new ArrayList<>();
+
         houses.add(new House(0, new LocatedAt(25.566666666666666, 84.53333333333333), "Arrah", "Bihar"));
+
         houses.add(new House(1, new LocatedAt(24.75, 84.41666666666667), "Aurangabad", "Bihar"));
         houses.add(new House(2, new LocatedAt(25.666666666666668, 85.2), "Bankipore", "Bihar"));
         houses.add(new House(3, new LocatedAt(23.166666666666668, 84.21666666666667), "Barwa", "Bihar"));
@@ -87,7 +89,7 @@ public class Locator {
 //            System.out.println(start.getId() + " to " + i + " is "
 //                    + djikstra.dist[i]);
 //        }
-        djikstra.printSolution(start.getId(),djikstra.dist,djikstra.parent);
+        djikstra.printSolution(start.getId(), djikstra.dist, djikstra.parent);
     }
 
 }
