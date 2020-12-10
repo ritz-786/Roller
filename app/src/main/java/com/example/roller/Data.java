@@ -1,5 +1,7 @@
 package com.example.roller;
 
+import android.util.Log;
+
 import com.example.roller.domain.House;
 import com.example.roller.domain.LocatedAt;
 import com.example.roller.domain.Product;
@@ -56,12 +58,13 @@ public class Data {
         houses.add(new House(2, new LocatedAt(25.666666666666668, 85.2), "Bankipore", "Bihar",productsMap));
 
         productsMap.clear();
-        productsMap.put(products.get(2),5);
+        productsMap.put(products.get(3),10);
+        productsMap.put(products.get(4),6);
         houses.add(new House(31, new LocatedAt(25.616666666666667, 85.21666666666667), "Patna", "Bihar",productsMap));
 
         productsMap.clear();
-        productsMap.put(products.get(3),10);
-        productsMap.put(products.get(4),6);
+        productsMap.put(products.get(0),4);
+        productsMap.put(products.get(2),5);
         houses.add(new House(41, new LocatedAt(28.7041, 77.1025), "Delhi", "Delhi",productsMap));
 
         productsMap.clear();
@@ -124,7 +127,7 @@ public class Data {
         return directory;
     }
 
-    public static void connectCities(String parent,String child){
+    private static void connectCities(String parent,String child){
         try {
             House h = directory.get(parent);
             House h1 = directory.get(child);
@@ -169,5 +172,37 @@ public class Data {
         connectCities("bengaluru","mumbai");
 
         connectCities("bengaluru","kolkata");
+    }
+
+    public static House findWareHouse(HashMap<Product,Integer> orderedProducts,LocatedAt userLocation){
+        int totalProductsSize = orderedProducts.size();
+        House nearestWareHouse = null;
+        float earlierDistance = Float.MAX_VALUE;
+
+        for(House house: getHouses()){
+            int cnt = 0;
+            HashMap<Product,Integer> products = house.getProducts();
+
+            for(Product key: orderedProducts.keySet()){
+                if(products.get(key) != null && products.get(key) >= orderedProducts.get(key)){
+                    cnt++;
+                }
+            }
+
+            if(cnt == totalProductsSize){
+                if(nearestWareHouse == null){
+                    nearestWareHouse = house;
+                    earlierDistance = Util.findDistance(nearestWareHouse.getLocation(),userLocation);
+                }else {
+                    float newDistance = Util.findDistance(house.getLocation(),userLocation);
+                    if(newDistance < earlierDistance){
+                        nearestWareHouse = house;
+                        earlierDistance = newDistance;
+                    }
+                }
+            }
+        }
+
+        return nearestWareHouse;
     }
 }
