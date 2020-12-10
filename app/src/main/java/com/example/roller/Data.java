@@ -40,40 +40,43 @@ public class Data {
     public static List<House> getHouses() {
         List<House> houses = new ArrayList<>();
         List<Product> products = getProducts();
-        HashMap<Product,Integer> productsMap = new HashMap<>();
 
+        HashMap<Product,Integer> productsMap = new HashMap<>();
         productsMap.put(products.get(0),10);
         productsMap.put(products.get(1),8);
 
         houses.add(new House(0, new LocatedAt(25.566666666666666, 84.53333333333333), "Arrah", "Bihar",productsMap));
 
-        productsMap.clear();
+        productsMap = new HashMap<>();
         productsMap.put(products.get(2),7);
         productsMap.put(products.get(3),5);
 
         houses.add(new House(1, new LocatedAt(24.75, 84.41666666666667), "Aurangabad", "Bihar",productsMap));
 
+        productsMap = new HashMap<>();
         productsMap.put(products.get(4),2);
         productsMap.put(products.get(5),4);
         houses.add(new House(2, new LocatedAt(25.666666666666668, 85.2), "Bankipore", "Bihar",productsMap));
 
-        productsMap.clear();
+        productsMap = new HashMap<>();
         productsMap.put(products.get(3),10);
         productsMap.put(products.get(4),6);
         houses.add(new House(31, new LocatedAt(25.616666666666667, 85.21666666666667), "Patna", "Bihar",productsMap));
 
-        productsMap.clear();
+        productsMap = new HashMap<>();
         productsMap.put(products.get(0),4);
         productsMap.put(products.get(2),5);
         houses.add(new House(41, new LocatedAt(28.7041, 77.1025), "Delhi", "Delhi",productsMap));
 
-        productsMap.clear();
+        productsMap = new HashMap<>();
         productsMap.put(products.get(4),8);
         houses.add(new House(51, new LocatedAt(19.0760, 72.8777), "mumbai", "Maharashtra",productsMap));
 
+        productsMap = new HashMap<>();
         productsMap.put(products.get(6),5);
         houses.add(new House(61, new LocatedAt(22.5726, 88.3639), "Kolkata", "West Bengal",productsMap));
 
+        productsMap = new HashMap<>();
         productsMap.put(products.get(6),10);
         houses.add(new House(71, new LocatedAt(12.9716, 77.5946), "Bengaluru", "Karnataka",productsMap));
 
