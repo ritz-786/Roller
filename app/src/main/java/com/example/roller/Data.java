@@ -19,6 +19,14 @@ public class Data {
 
         houses.add(new House(1, new LocatedAt(24.75, 84.41666666666667), "Aurangabad", "Bihar"));
         houses.add(new House(2, new LocatedAt(25.666666666666668, 85.2), "Bankipore", "Bihar"));
+        houses.add(new House(31, new LocatedAt(25.616666666666667, 85.21666666666667), "Patna", "Bihar"));
+
+        houses.add(new House(41, new LocatedAt(28.7041, 77.1025), "Delhi", "Delhi"));
+        houses.add(new House(51, new LocatedAt(19.0760, 72.8777), "mumbai", "Maharashtra"));
+        houses.add(new House(61, new LocatedAt(22.5726, 88.3639), "Kolkata", "West Bengal"));
+        houses.add(new House(71, new LocatedAt(12.9716, 77.5946), "Bengaluru", "Karnataka"));
+
+
 //        houses.add(new House(3, new LocatedAt(23.166666666666668, 84.21666666666667), "Barwa", "Bihar"));
 //        houses.add(new House(4, new LocatedAt(26.8, 84.55), "Bettiah", "Bihar"));
 //        houses.add(new House(5, new LocatedAt(25.25, 87.01666666666667), "Bhagalpur", "Bihar"));
@@ -41,13 +49,6 @@ public class Data {
 //        houses.add(new House(22, new LocatedAt(25.5, 87.66666666666667), "Kathihar", "Bihar"));
 //        houses.add(new House(23, new LocatedAt(26.166666666666668, 87.03333333333333), "Kishanganj", "Bihar"));
 //        houses.add(new House(24, new LocatedAt(23.666666666666668, 84.55), "Mankheri", "Bihar"));
-        houses.add(new House(25, new LocatedAt(25.616666666666667, 85.21666666666667), "Patna", "Bihar"));
-
-        houses.add(new House(26, new LocatedAt(12.9716,77.5946 ), "Bengaluru", "Karnataka"));
-        houses.add(new House(27, new LocatedAt(22.5726,88.3639 ), "Kolkatta", "West Bengal"));
-
-        houses.add(new House(27, new LocatedAt(19.0760,72.8777 ), "Mumbai", "Maharashtra"));
-        houses.add(new House(27, new LocatedAt(22.5726,77.1025 ), "New Delhi", "Delhi"));
 
 //        houses.add(new House(25, new LocatedAt(25.4, 85.91666666666667), "Mokameh", "Bihar"));
 //        houses.add(new House(26, new LocatedAt(26.666666666666668, 85.23333333333333), "Motihari", "Bihar"));
@@ -67,7 +68,7 @@ public class Data {
         return houses;
     }
 
-    private HashMap<String,House> getIdByCity(){
+    private static HashMap<String,House> getIdByCity(){
         HashMap<String,House> directory = new HashMap<>();
         for(House house: getHouses()){
             directory.put(house.getCity().toLowerCase(),house);
@@ -75,74 +76,50 @@ public class Data {
         return directory;
     }
 
-    void connectCities(String child,String parent){
+    public static void connectCities(String parent,String child){
         try {
             House h = directory.get(parent);
             House h1 = directory.get(child);
             assert h != null;
             assert h1 != null;
             Node newNode = new Node(h1.getId(),Util.findDistance(h.getLocation(),h1.getLocation()));
+            Node newNode1 = new Node(h.getId(),Util.findDistance(h.getLocation(),h1.getLocation()));
             List<Node> n = adj.get(h.getId());
+            List<Node> m = adj.get(h1.getId());
             if(n==null){
                 n = new ArrayList<>();
             }
+            if(m==null)
+                m = new ArrayList<>();
             n.add(newNode);
-
+            m.add(newNode1);
             adj.put(h.getId(),n);
-
+            adj.put(h1.getId(),m);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    void connecting(){
+    public static void connecting(){
         directory = getIdByCity();
-        connectCities("Arrah","Patna");
-        connectCities("Aurangabad","Patna");
-        connectCities("Bankipore","Patna");
-//        connectCities("Barwa","Patna");
-//        connectCities("Bettiah","Patna");
-//        connectCities("Bhagalpur","Patna");
-//        connectCities("Buddh","Patna");
-//        connectCities("Buxar","Patna");
-//        connectCities("Chhapra","Patna");
-//        connectCities("Colgong","Patna");
-//        connectCities("Darbhanga","Patna");
-//        connectCities("Gandak","Patna");
-//        connectCities("Gaya","Patna");
-//        connectCities("Gogri","Patna");
-//        connectCities("Gopalganj","Patna");
-//        connectCities("Hajipur","Patna");
-//        connectCities("Jamalpur","Patna");
-//        connectCities("Jyanagar","Patna");
-//        connectCities("Kathihar","Patna");
-//        connectCities("Kishanganj","Patna");
-//        connectCities("Mankheri","Patna");
+        connectCities("arrah","patna");
+        connectCities("aurangabad","patna");
+        connectCities("bankipore","patna");
 
-        connectCities("Bengaluru","Patna");
-        connectCities("Kolkatta","Patna");
-        connectCities("Mumbai","Patna");
-        connectCities("New Delhi","Patna");
 
-        connectCities("Patna","Bengaluru");
-        connectCities("Mumbai","Bengaluru");
-        connectCities("Kolkatta","Bengaluru");
-        connectCities("New Delhi","Bengaluru");
 
-        connectCities("Patna","New Delhi");
-        connectCities("Mumbai","New Delhi");
-        connectCities("Kolkatta","New Delhi");
-        connectCities("Bengaluru","New Delhi");
+        connectCities("delhi","patna");
+        connectCities("mumbai","patna");
+        connectCities("kolkata","patna");
+        connectCities("bengaluru","patna");
 
-        connectCities("Patna","Kolkatta");
-        connectCities("Mumbai","Kolkatta");
-        connectCities("Bengaluru","Kolkatta");
-        connectCities("New Delhi","Kolkatta");
+        connectCities("mumbai","delhi");
+        connectCities("kolkata","delhi");
+        connectCities("bengaluru","delhi");
 
-        connectCities("Kolkatta","Mumbai");
-        connectCities("Patna","Mumbai");
-        connectCities("Bengaluru","Mumbai");
-        connectCities("New Delhi","Mumbai");
+        connectCities("kolkata","mumbai");
+        connectCities("bengaluru","mumbai");
 
+        connectCities("bengaluru","kolkata");
     }
 }

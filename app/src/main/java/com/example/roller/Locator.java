@@ -2,6 +2,8 @@ package com.example.roller;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.example.roller.domain.House;
 
 import java.util.ArrayList;
@@ -19,18 +21,26 @@ public class Locator {
         List<House> houses = Data.getHouses();
         int V = houses.size();
 
-        HashMap<Integer, List<Node>> adj = new HashMap<>();
+//        HashMap<Integer, List<Node>> adj = new HashMap<>();
 
-        for (House house : houses) {
-            List<Node> nodes = new ArrayList<>();
-            for (House otherHouse : houses) {
-                if (otherHouse.getId() != house.getId()) {
-                    float distance = Util.findDistance(house.getLocation(), otherHouse.getLocation());
-                    nodes.add(new Node(otherHouse.getId(), distance));
-                }
-            }
-            adj.put(house.getId(), nodes);
-        }
+//        for (House house : houses) {
+//            List<Node> nodes = new ArrayList<>();
+//            for (House otherHouse : houses) {
+//                if (otherHouse.getId() != house.getId()) {
+//                    float distance = Util.findDistance(house.getLocation(), otherHouse.getLocation());
+//                    nodes.add(new Node(otherHouse.getId(), distance));
+//                }
+//            }
+//            adj.put(house.getId(), nodes);
+//        }
+        Data.connecting();
+        HashMap<Integer, List<Node>> adj = Data.adj;
+
+        System.out.println("Graph of houses are as follows");
+        System.out.println(adj);
+
+
+
 
         Djikstra djikstra = new Djikstra(V);
         djikstra.dijkstra(adj, start.getId());
@@ -132,8 +142,16 @@ class Djikstra {
 
 class Node implements Comparator<Node> {
 
-    public int node;
-    public float cost;
+    public  int node;
+    public  float cost;
+
+    @NonNull
+    @Override
+    public String toString() {
+
+//        return super.toString();
+        return "" + node;
+    }
 
     public Node() {
     }
