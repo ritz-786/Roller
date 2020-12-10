@@ -22,16 +22,17 @@ public class Data {
         String uri = "@drawable/x";
         Product shoes = new Product(uri,"Shoes",8);
         Product watch = new Product(uri,"Watch",10);
-        Product belt = new Product(uri,"Belt",3);
         Product shirt = new Product(uri,"Shirt",7);
+        Product belt = new Product(uri,"Belt",3);
         Product pant = new Product(uri,"Trousers",7);
         Product socks = new Product(uri,"Socks",5);
         Product laptop = new Product(uri,"Laptop",20);
 
         products.add(shoes);
-        products.add(belt);
         products.add(watch);
         products.add(shirt);
+
+        products.add(belt);
         products.add(pant);
         products.add(socks);
         products.add(laptop);

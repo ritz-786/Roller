@@ -43,9 +43,10 @@
         android:textSize="25dp"
         android:layout_marginTop="300dp"
         android:layout_marginLeft="80dp"
-        android:text="M1" />
+        android:text="Shoes" />
 
     <EditText
+        android:id="@+id/Shoes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="0"
@@ -59,9 +60,10 @@
         android:textSize="25dp"
         android:layout_marginTop="400dp"
         android:layout_marginLeft="80dp"
-        android:text="M2" />
+        android:text="Watch" />
 
     <EditText
+        android:id="@+id/Watch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="0"
@@ -76,9 +78,10 @@
         android:textSize="25dp"
         android:layout_marginTop="500dp"
         android:layout_marginLeft="80dp"
-        android:text="M3" />
+        android:text="Shirt" />
 
     <EditText
+        android:id="@+id/Shirt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="0"
@@ -87,6 +90,7 @@
         android:textSize="25dp" />
 
     <Button
+        android:id="@+id/OrderProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="160dp"

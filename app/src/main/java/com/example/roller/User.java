@@ -1,5 +1,6 @@
 package com.example.roller;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -15,27 +21,33 @@ import android.view.ViewGroup;
  */
 public class User extends Fragment {
 
+
+
+
+    // Instantiate Interface User_info
+    UserInfo userInfo;
+
+    public void getContext(Activity activity)
+    {
+        try {
+            userInfo = (UserInfo)activity;
+        }catch (ClassCastException e){
+            Toast.makeText(activity, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    public User() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment User.
-     */
     // TODO: Rename and change types and number of parameters
     public static User newInstance(String param1, String param2) {
         User fragment = new User();
@@ -55,10 +67,38 @@ public class User extends Fragment {
         }
     }
 
+    Button Ordered;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user, container, false);
+        View view = inflater.inflate(R.layout.fragment_user, container, false);
+
+        EditText shoe =  view.findViewById(R.id.Shoes);
+        EditText watch = view.findViewById(R.id.Watch);
+        EditText shirt = view.findViewById(R.id.Shirt);
+        Ordered = view.findViewById(R.id.OrderProduct);
+
+        Ordered.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                HashMap<String, Integer> hashMap = new HashMap<>();
+
+
+                hashMap.put("Shoe",Integer.parseInt(shoe.getText().toString()));
+                hashMap.put("Watch", Integer.parseInt(watch.getText().toString()));
+                hashMap.put("Shirt", Integer.parseInt(shirt.getText().toString()));
+
+                userInfo.Info_User(hashMap);
+            }
+        });
+
+        return view;
+    }
+
+    public interface UserInfo{
+
+        public void Info_User(HashMap<String, Integer> hashMap);
     }
 }
