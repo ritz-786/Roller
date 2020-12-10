@@ -17,7 +17,7 @@ import java.util.Set;
 
 public class Locator {
 
-    public void initiator(House start) {
+    public void initiator(House start,House end) {
         List<House> houses = Data.getHouses();
         int V = houses.size();
 
@@ -36,21 +36,23 @@ public class Locator {
         Data.connecting();
         HashMap<Integer, List<Node>> adj = Data.adj;
 
+        // Graph
         System.out.println("Graph of houses are as follows");
         System.out.println(adj);
-
-
-
 
         Djikstra djikstra = new Djikstra(V);
         djikstra.dijkstra(adj, start.getId());
 
-        System.out.println("The Shortest Path from node : ");
-        Log.d("MyString", "The Shortest Path from node : " + start);
-        for (int x : djikstra.dist.keySet()) {
-            Log.d("Djikstra", x + "-> " + djikstra.dist.get(x));
-        }
-        djikstra.printSolution(start.getId(), djikstra.dist, djikstra.parent);
+//        System.out.println("The Shortest Path from node : ");
+//        Log.d("MyString", "The Shortest Path from node : " + start);
+//        for (int x : djikstra.dist.keySet()) {
+//            Log.d("Djikstra", x + "-> " + djikstra.dist.get(x));
+//        }
+
+//        djikstra.printSolution(start.getId(), djikstra.dist, djikstra.parent);
+        // Required Path
+        djikstra.printPath(end.getId(),djikstra.parent);
+        Log.d("Path:= ", djikstra.path);
     }
 
 }
@@ -64,11 +66,14 @@ class Djikstra {
     private int V;
     HashMap<Integer, List<Node>> adj;
 
+    String path;
+
     public Djikstra(int V) {
         this.V = V;
         dist = new HashMap<>();
         parent = new HashMap<>();
         settled = new HashSet<>();
+        path = "";
         pq = new PriorityQueue<>(V, new Node());
     }
 
@@ -137,6 +142,7 @@ class Djikstra {
         }
         printPath(parents.get(currentVertex), parents);
         System.out.print(currentVertex + " ");
+        path = currentVertex + "-> " + path;
     }
 }
 

@@ -27,19 +27,19 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        House house = Data.getHouses().get(0);
-//
-//        Locator locator = new Locator();
-//        locator.initiator(house);
-
         List<Product> products = Data.getProducts();
         HashMap<Product,Integer> orderedProducts = new HashMap<>();
         orderedProducts.put(products.get(0),3);
         orderedProducts.put(products.get(2),4);
 
-        Log.d(TAG, orderedProducts + "");
         House requiredWareHouse = Data.findWareHouse(orderedProducts, new LocatedAt(25.566666666666666, 84.53333333333333));
-        Log.d(TAG, " " + requiredWareHouse);
+        House nearestWareHouse = Data.findNearestWareHouse(new LocatedAt(25.566666666666666, 84.53333333333333));
+        Log.d(TAG, " " + requiredWareHouse.getCity() + " " + nearestWareHouse.getCity());
+
+        if(nearestWareHouse != null && requiredWareHouse != null){
+            Locator locator = new Locator();
+            locator.initiator(nearestWareHouse,requiredWareHouse);
+        }
 
         bnv = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
         bnv.setOnNavigationItemSelectedListener(this);

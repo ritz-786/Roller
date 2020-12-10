@@ -6,6 +6,8 @@ import com.example.roller.domain.House;
 import com.example.roller.domain.LocatedAt;
 import com.example.roller.domain.Product;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -177,7 +179,7 @@ public class Data {
         connectCities("bengaluru","kolkata");
     }
 
-    public static House findWareHouse(HashMap<Product,Integer> orderedProducts,LocatedAt userLocation){
+    public static House findWareHouse(@NotNull HashMap<Product,Integer> orderedProducts, LocatedAt userLocation){
         int totalProductsSize = orderedProducts.size();
         House nearestWareHouse = null;
         float earlierDistance = Float.MAX_VALUE;
@@ -207,5 +209,20 @@ public class Data {
         }
 
         return nearestWareHouse;
+    }
+
+    public static House findNearestWareHouse(LocatedAt userLocation){
+        House nearestHouse = null;
+        float earlierDistance = Float.MAX_VALUE;
+
+        for(House house : getHouses()){
+            float newDistance = Util.findDistance(house.getLocation(),userLocation);
+            if(newDistance < earlierDistance){
+                nearestHouse = house;
+                earlierDistance = newDistance;
+            }
+        }
+
+        return nearestHouse;
     }
 }
