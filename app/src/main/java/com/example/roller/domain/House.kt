@@ -4,5 +4,6 @@ data class House(
     val id: Int,
     val location: LocatedAt,
     val city: String,
-    val state: String
+    val state: String,
+    val products: HashMap<Product,Int>
 )

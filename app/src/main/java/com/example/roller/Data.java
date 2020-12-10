@@ -2,6 +2,7 @@ package com.example.roller;
 
 import com.example.roller.domain.House;
 import com.example.roller.domain.LocatedAt;
+import com.example.roller.domain.Product;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,19 +13,66 @@ public class Data {
     public static HashMap<Integer, List<Node>> adj = new HashMap<>();
     public static HashMap<String,House> directory = new HashMap<>();
 
+    public static List<Product> getProducts() {
+        List<Product> products = new ArrayList<>();
+        String uri = "@drawable/x";
+        Product shoes = new Product(uri,"Shoes",8);
+        Product watch = new Product(uri,"Watch",10);
+        Product belt = new Product(uri,"Belt",3);
+        Product shirt = new Product(uri,"Shirt",7);
+        Product pant = new Product(uri,"Trousers",7);
+        Product socks = new Product(uri,"Socks",5);
+        Product laptop = new Product(uri,"Laptop",20);
+
+        products.add(shoes);
+        products.add(belt);
+        products.add(watch);
+        products.add(shirt);
+        products.add(pant);
+        products.add(socks);
+        products.add(laptop);
+
+        return products;
+    }
+
     public static List<House> getHouses() {
         List<House> houses = new ArrayList<>();
+        List<Product> products = getProducts();
+        HashMap<Product,Integer> productsMap = new HashMap<>();
 
-        houses.add(new House(0, new LocatedAt(25.566666666666666, 84.53333333333333), "Arrah", "Bihar"));
+        productsMap.put(products.get(0),10);
+        productsMap.put(products.get(1),8);
 
-        houses.add(new House(1, new LocatedAt(24.75, 84.41666666666667), "Aurangabad", "Bihar"));
-        houses.add(new House(2, new LocatedAt(25.666666666666668, 85.2), "Bankipore", "Bihar"));
-        houses.add(new House(31, new LocatedAt(25.616666666666667, 85.21666666666667), "Patna", "Bihar"));
+        houses.add(new House(0, new LocatedAt(25.566666666666666, 84.53333333333333), "Arrah", "Bihar",productsMap));
 
-        houses.add(new House(41, new LocatedAt(28.7041, 77.1025), "Delhi", "Delhi"));
-        houses.add(new House(51, new LocatedAt(19.0760, 72.8777), "mumbai", "Maharashtra"));
-        houses.add(new House(61, new LocatedAt(22.5726, 88.3639), "Kolkata", "West Bengal"));
-        houses.add(new House(71, new LocatedAt(12.9716, 77.5946), "Bengaluru", "Karnataka"));
+        productsMap.clear();
+        productsMap.put(products.get(2),7);
+        productsMap.put(products.get(3),5);
+
+        houses.add(new House(1, new LocatedAt(24.75, 84.41666666666667), "Aurangabad", "Bihar",productsMap));
+
+        productsMap.put(products.get(4),2);
+        productsMap.put(products.get(5),4);
+        houses.add(new House(2, new LocatedAt(25.666666666666668, 85.2), "Bankipore", "Bihar",productsMap));
+
+        productsMap.clear();
+        productsMap.put(products.get(2),5);
+        houses.add(new House(31, new LocatedAt(25.616666666666667, 85.21666666666667), "Patna", "Bihar",productsMap));
+
+        productsMap.clear();
+        productsMap.put(products.get(3),10);
+        productsMap.put(products.get(4),6);
+        houses.add(new House(41, new LocatedAt(28.7041, 77.1025), "Delhi", "Delhi",productsMap));
+
+        productsMap.clear();
+        productsMap.put(products.get(4),8);
+        houses.add(new House(51, new LocatedAt(19.0760, 72.8777), "mumbai", "Maharashtra",productsMap));
+
+        productsMap.put(products.get(6),5);
+        houses.add(new House(61, new LocatedAt(22.5726, 88.3639), "Kolkata", "West Bengal",productsMap));
+
+        productsMap.put(products.get(6),10);
+        houses.add(new House(71, new LocatedAt(12.9716, 77.5946), "Bengaluru", "Karnataka",productsMap));
 
 
 //        houses.add(new House(3, new LocatedAt(23.166666666666668, 84.21666666666667), "Barwa", "Bihar"));

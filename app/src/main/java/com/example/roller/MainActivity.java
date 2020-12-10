@@ -22,12 +22,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        House house = new House(
-                0,
-                new LocatedAt(25.566666666666666, 84.53333333333333),
-                "Arrah",
-                "Bihar"
-        );
+        House house = Data.getHouses().get(0);
 
         Locator locator = new Locator();
         locator.initiator(house);
