@@ -36,7 +36,7 @@ public class Locator {
         djikstra.dijkstra(adj, start.getId());
 
         System.out.println("The Shortest Path from node : ");
-        Log.d("MyString", "The Shortest Path from node : ");
+        Log.d("MyString", "The Shortest Path from node : " + start);
         for (int x : djikstra.dist.keySet()) {
             Log.d("Djikstra", x + "-> " + djikstra.dist.get(x));
         }

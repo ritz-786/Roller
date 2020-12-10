@@ -77,6 +77,7 @@ public class Data {
             n.add(newNode);
 
             adj.put(h.getId(),n);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
