@@ -1,3 +1,3 @@
 package com.example.roller.domain
 
-data class LocatedAt(val longitude: Double, val latitude: Double);
+data class LocatedAt(val latitude: Double, val longitude: Double);
