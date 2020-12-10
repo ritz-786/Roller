@@ -8,6 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Data {
+
+    public static HashMap<Integer, List<Node>> adj = new HashMap<>();
+    public static HashMap<String,House> directory = new HashMap<>();
+
     public static List<House> getHouses() {
         List<House> houses = new ArrayList<>();
 
@@ -64,21 +68,27 @@ public class Data {
         return directory;
     }
 
-    void connectCities(){
+    void connectCities(String parent,String child){
         try {
-            HashMap<String,House> directory = getIdByCity();
-            HashMap<Integer, List<Node>> adj = new HashMap<>();
-            House h = directory.get("arrah");
-            House h1 = directory.get("hajipur");
+            House h = directory.get(parent);
+            House h1 = directory.get(child);
             assert h != null;
             assert h1 != null;
-            Node newNode = new Node(h.getId(),Util.findDistance(h.getLocation(),h1.getLocation()));
-            List<Node> n = new ArrayList<>();
+            Node newNode = new Node(h1.getId(),Util.findDistance(h.getLocation(),h1.getLocation()));
+            List<Node> n = adj.get(h.getId());
+            if(n==null){
+                n = new ArrayList<>();
+            }
             n.add(newNode);
 
             adj.put(h.getId(),n);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    void connecting(){
+        directory = getIdByCity();
+        connectCities("arrah","patna");
     }
 }
