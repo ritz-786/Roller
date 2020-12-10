@@ -72,7 +72,7 @@ public class Data {
         return houses;
     }
 
-    private HashMap<String,House> getIdByCity(){
+    private static HashMap<String,House> getIdByCity(){
         HashMap<String,House> directory = new HashMap<>();
         for(House house: getHouses()){
             directory.put(house.getCity().toLowerCase(),house);
@@ -80,7 +80,7 @@ public class Data {
         return directory;
     }
 
-    void connectCities(String parent,String child){
+    public static void connectCities(String parent,String child){
         try {
             House h = directory.get(parent);
             House h1 = directory.get(child);
@@ -89,7 +89,7 @@ public class Data {
             Node newNode = new Node(h1.getId(),Util.findDistance(h.getLocation(),h1.getLocation()));
             Node newNode1 = new Node(h.getId(),Util.findDistance(h.getLocation(),h1.getLocation()));
             List<Node> n = adj.get(h.getId());
-            List<Node> m = adj.get(h.getId());
+            List<Node> m = adj.get(h1.getId());
             if(n==null){
                 n = new ArrayList<>();
             }
@@ -104,7 +104,7 @@ public class Data {
         }
     }
 
-    void connecting(){
+    public static void connecting(){
         directory = getIdByCity();
         connectCities("arrah","patna");
         connectCities("aurangabad","patna");
