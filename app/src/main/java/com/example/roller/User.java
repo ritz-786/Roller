@@ -21,6 +21,9 @@ import java.util.HashMap;
  */
 public class User extends Fragment {
 
+
+
+
     // Instantiate Interface User_info
     UserInfo userInfo;
 
@@ -102,7 +105,6 @@ public class User extends Fragment {
                     socks.setText("0");
                 if(laptops.getText().toString().isEmpty())
                     laptops.setText("0");
-
                 hashMap.put("Shoe",Integer.parseInt( shoe.getText().toString() ));
                 hashMap.put("Watch", Integer.parseInt(watch.getText().toString()));
                 hashMap.put("Shirt", Integer.parseInt(shirt.getText().toString()));
