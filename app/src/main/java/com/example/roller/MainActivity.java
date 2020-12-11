@@ -97,7 +97,6 @@ public class MainActivity extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, retailerFragment).commit();
                 return true;
         }
-
         return false;
     }
 
