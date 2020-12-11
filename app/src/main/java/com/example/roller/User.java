@@ -86,14 +86,27 @@ public class User extends Fragment {
 
             HashMap<String, Integer> hashMap = new HashMap<>();
 
-
-            hashMap.put("Shoe", Integer.parseInt(shoe.getText().toString().equals("") ? "0" : shoe.getText().toString()));
-            hashMap.put("Watch", Integer.parseInt(watch.getText().toString().equals("") ? "0" : watch.getText().toString()));
-            hashMap.put("Shirt", Integer.parseInt(shirt.getText().toString().equals("") ? "0" : shirt.getText().toString()));
-            hashMap.put("Belts", Integer.parseInt(belts.getText().toString().equals("") ? "0" : belts.getText().toString()));
-            hashMap.put("Trousers", Integer.parseInt(trouser.getText().toString().equals("") ? "0" : trouser.getText().toString()));
-            hashMap.put("Socks", Integer.parseInt(socks.getText().toString().equals("") ? "0" : socks.getText().toString()));
-            hashMap.put("Laptops", Integer.parseInt(laptops.getText().toString().equals("") ? "0" : laptops.getText().toString()));
+            if (shoe.getText().toString().isEmpty())
+                shoe.setText("0");
+            if (watch.getText().toString().isEmpty())
+                watch.setText("0");
+            if (shirt.getText().toString().isEmpty())
+                shirt.setText("0");
+            if (belts.getText().toString().isEmpty())
+                belts.setText("0");
+            if (trouser.getText().toString().isEmpty())
+                trouser.setText("0");
+            if (socks.getText().toString().isEmpty())
+                socks.setText("0");
+            if (laptops.getText().toString().isEmpty())
+                laptops.setText("0");
+            hashMap.put("Shoe", Integer.parseInt(shoe.getText().toString()));
+            hashMap.put("Watch", Integer.parseInt(watch.getText().toString()));
+            hashMap.put("Shirt", Integer.parseInt(shirt.getText().toString()));
+            hashMap.put("Belts", Integer.parseInt(belts.getText().toString()));
+            hashMap.put("Trousers", Integer.parseInt(trouser.getText().toString()));
+            hashMap.put("Socks", Integer.parseInt(socks.getText().toString()));
+            hashMap.put("Laptops", Integer.parseInt(laptops.getText().toString()));
             userInfo.Info_User(hashMap);
         });
 
