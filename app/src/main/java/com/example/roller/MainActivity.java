@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.location.LocationKt;
 
 import com.example.roller.domain.House;
 import com.example.roller.domain.LocatedAt;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity
     Double lattitude, longitude;
 
     //Instatiate Location manager
+    LocationListener locationListener;
     LocationManager locationManager;
 
     @Override
@@ -46,7 +48,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
 
-
+        LocationManager locationManager = (LocationManager)
+                getSystemService(Context.LOCATION_SERVICE);
         User_Fragement_Data = new HashMap<>();
         userFragment = new User();
         retailerFragment = new Retailer();
@@ -56,6 +59,10 @@ public class MainActivity extends AppCompatActivity
         orderedProducts.put(products.get(0), User_Fragement_Data.get("Shoe"));
         orderedProducts.put(products.get(1), User_Fragement_Data.get("Watch"));
         orderedProducts.put(products.get(2), User_Fragement_Data.get("Shirt"));
+        orderedProducts.put(products.get(3), User_Fragement_Data.get("Belts"));
+        orderedProducts.put(products.get(4), User_Fragement_Data.get("Trousers"));
+        orderedProducts.put(products.get(5), User_Fragement_Data.get("Socks"));
+        orderedProducts.put(products.get(5), User_Fragement_Data.get("Laptops"));
 
 //        House requiredWareHouse = Data.findWareHouse(orderedProducts, new LocatedAt(lattitude, longitude));
 //        House nearestWareHouse = Data.findNearestWareHouse(new LocatedAt(lattitude, longitude));

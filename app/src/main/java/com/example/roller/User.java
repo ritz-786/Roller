@@ -76,8 +76,14 @@ public class User extends Fragment {
 
         EditText shoe =  view.findViewById(R.id.Shoes);
         EditText watch = view.findViewById(R.id.Watch);
-        EditText shirt = view.findViewById(R.id.Shirt);
-        Ordered = view.findViewById(R.id.OrderProduct);
+        EditText shirt = view.findViewById(R.id.Shirts);
+        EditText belts = view.findViewById(R.id.Belts);
+        EditText  trouser = view.findViewById(R.id.Trousers);
+        EditText socks = view.findViewById(R.id.Socks);
+        EditText laptops = view.findViewById(R.id.Laptops);
+
+
+        Ordered = view.findViewById(R.id.Order);
 
         Ordered.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +95,10 @@ public class User extends Fragment {
                 hashMap.put("Shoe",Integer.parseInt(shoe.getText().toString()));
                 hashMap.put("Watch", Integer.parseInt(watch.getText().toString()));
                 hashMap.put("Shirt", Integer.parseInt(shirt.getText().toString()));
-
+                hashMap.put("Belts", Integer.parseInt(belts.getText().toString()));
+                hashMap.put("Trousers", Integer.parseInt(trouser.getText().toString()));
+                hashMap.put("Socks", Integer.parseInt(socks.getText().toString()));
+                hashMap.put("Laptops", Integer.parseInt(laptops.getText().toString()));
                 userInfo.Info_User(hashMap);
             }
         });
