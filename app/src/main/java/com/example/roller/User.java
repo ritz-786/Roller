@@ -91,8 +91,21 @@ public class User extends Fragment {
 
                 HashMap<String, Integer> hashMap = new HashMap<>();
 
-
-                hashMap.put("Shoe",Integer.parseInt(shoe.getText().toString()));
+                if(shoe.getText().toString().isEmpty())
+                    shoe.setText("0");
+                if(watch.getText().toString().isEmpty())
+                    watch.setText("0");
+                if(shirt.getText().toString().isEmpty())
+                    shirt.setText("0");
+                if(belts.getText().toString().isEmpty())
+                    belts.setText("0");
+                if(trouser.getText().toString().isEmpty())
+                    trouser.setText("0");
+                if(socks.getText().toString().isEmpty())
+                    socks.setText("0");
+                if(laptops.getText().toString().isEmpty())
+                    laptops.setText("0");
+                hashMap.put("Shoe",Integer.parseInt( shoe.getText().toString() ));
                 hashMap.put("Watch", Integer.parseInt(watch.getText().toString()));
                 hashMap.put("Shirt", Integer.parseInt(shirt.getText().toString()));
                 hashMap.put("Belts", Integer.parseInt(belts.getText().toString()));
