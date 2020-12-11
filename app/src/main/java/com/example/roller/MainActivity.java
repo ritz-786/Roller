@@ -180,7 +180,8 @@ public class MainActivity extends AppCompatActivity
 
                             if(nearestWareHouse != null && requiredWareHouse != null){
                                 Locator locator = new Locator();
-                                locator.initiator(nearestWareHouse,requiredWareHouse);
+                                String path = locator.initiator(nearestWareHouse,requiredWareHouse);
+                                Log.d("Path:=", path);
                             }
 //
 //                            Toast.makeText(MainActivity.this, latitude + " " + longitude, Toast.LENGTH_SHORT).show();
