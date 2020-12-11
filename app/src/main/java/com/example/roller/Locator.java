@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 
 import com.example.roller.domain.House;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -17,7 +16,7 @@ import java.util.Set;
 
 public class Locator {
 
-    public void initiator(House start,House end) {
+    public String initiator(House start, House end) {
         List<House> houses = Data.getHouses();
         int V = houses.size();
 
@@ -51,15 +50,16 @@ public class Locator {
 
 //        djikstra.printSolution(start.getId(), djikstra.dist, djikstra.parent);
         // Required Path
-        djikstra.printPath(end.getId(),djikstra.parent);
-        Log.d("Path:= ", djikstra.path);
+        djikstra.printPath(end.getId(), djikstra.parent);
+//        Log.d("Path:= ", djikstra.path);
+        return djikstra.path;
     }
 
 }
 
 class Djikstra {
     HashMap<Integer, Double> dist;
-    HashMap<Integer,Integer> parent;
+    HashMap<Integer, Integer> parent;
 
     private final Set<Integer> settled;
     private PriorityQueue<Node> pq;
@@ -80,7 +80,7 @@ class Djikstra {
     public void dijkstra(HashMap<Integer, List<Node>> adj, int src) {
         this.adj = adj;
         pq.add(new Node(src, 0));
-        parent.put(src,-1);
+        parent.put(src, -1);
 
         dist.put(src, 0.0);
         while (settled.size() != V) {
@@ -111,7 +111,7 @@ class Djikstra {
 
                 if (newDistance < dis) {
                     dist.put(v.node, (double) newDistance);
-                    parent.put(v.node,u);
+                    parent.put(v.node, u);
                 }
 
                 pq.add(new Node(v.node, Float.parseFloat(String.valueOf(dist.get(v.node)))));
@@ -119,11 +119,11 @@ class Djikstra {
         }
     }
 
-    void printSolution(int startVertex, HashMap<Integer,Double> distances, HashMap<Integer,Integer> parents) {
+    void printSolution(int startVertex, HashMap<Integer, Double> distances, HashMap<Integer, Integer> parents) {
         System.out.print("Vertex\t Distance\tPath");
 
-        for (int vertexIndex: distances.keySet()){
-            if(distances.get(vertexIndex) != startVertex){
+        for (int vertexIndex : distances.keySet()) {
+            if (distances.get(vertexIndex) != startVertex) {
                 System.out.print("\n" + startVertex + " -> ");
                 System.out.print(vertexIndex + " \t\t ");
                 System.out.print(distances.get(vertexIndex) + "\t\t");
@@ -133,7 +133,7 @@ class Djikstra {
     }
 
     void printPath(int currentVertex,
-                   HashMap<Integer,Integer> parents) {
+                   HashMap<Integer, Integer> parents) {
 
         // Base case : Source node has
         // been processed
@@ -148,8 +148,8 @@ class Djikstra {
 
 class Node implements Comparator<Node> {
 
-    public  int node;
-    public  float cost;
+    public int node;
+    public float cost;
 
     @NonNull
     @Override
