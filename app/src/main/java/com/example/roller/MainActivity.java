@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Looper;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -14,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.roller.domain.House;
+import com.example.roller.domain.LocatedAt;
 import com.example.roller.domain.Product;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -81,12 +84,14 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    HashMap<Product, Integer> orderedProducts = new HashMap<>();
+
     @Override
     public void Info_User(HashMap<String, Integer> User_Info) {
+        Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show();
         User_Fragment_Data = User_Info;
         List<Product> products = Data.getProducts();
 
-        HashMap<Product, Integer> orderedProducts = new HashMap<>();
         if (User_Info.get("Shoe") > 0)
             orderedProducts.put(products.get(0), User_Fragment_Data.get("Shoe"));
 
@@ -117,21 +122,8 @@ public class MainActivity extends AppCompatActivity
                     REQUEST_CODE_LOCATION_PERMISSION
             );
         } else {
-            getCurrentLocation();
+            getCurrentLocation(orderedProducts);
         }
-
-//        Log.d(TAG, orderedProducts + "");
-//        Log.d(TAG, User_Fragement_Data + "");
-//        Toastsuper.onRequestPermissionsResult(requestCode, permissions, grantResults);.makeText(this, "=====  " + User_Fragement_Data.get("Shoe"), Toast.LENGTH_SHORT).show();
-
-//        House requiredWareHouse = Data.findWareHouse(orderedProducts, new LocatedAt(lattitude, longitude));
-//        House nearestWareHouse = Data.findNearestWareHouse(new LocatedAt(lattitude, longitude));
-//        Log.d(TAG, " " + requiredWareHouse.getCity() + " " + nearestWareHouse.getCity());
-//
-//        if(nearestWareHouse != null && requiredWareHouse != null){
-//            Locator locator = new Locator();
-//            locator.initiator(nearestWareHouse,requiredWareHouse);
-//        }
 
     }
 
@@ -140,14 +132,14 @@ public class MainActivity extends AppCompatActivity
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults.length > 0) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getCurrentLocation();
+                getCurrentLocation(orderedProducts);
             } else {
                 Toast.makeText(this, "Permission Denied ", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    private void getCurrentLocation() {
+    private void getCurrentLocation(HashMap<Product,Integer> orderedProducts) {
         LocationRequest locationRequest = new LocationRequest();
         locationRequest.setInterval(10000);
         locationRequest.setFastestInterval(3000);
@@ -178,7 +170,21 @@ public class MainActivity extends AppCompatActivity
                             double latitude = locationResult.getLocations().get(latestLocationIndex).getLatitude();
                             double longitude = locationResult.getLocations().get(latestLocationIndex).getLongitude();
 
-                            Toast.makeText(MainActivity.this, latitude + " " + longitude, Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, orderedProducts + "");
+
+                            House requiredWareHouse = Data.findWareHouse(orderedProducts, new LocatedAt(latitude, longitude));
+                            House nearestWareHouse = Data.findNearestWareHouse(new LocatedAt(latitude, longitude));
+                            Log.d(TAG, " " + requiredWareHouse.getCity() + " " + nearestWareHouse.getCity());
+
+                            Log.d(TAG, requiredWareHouse + "");
+                            Log.d(TAG, nearestWareHouse + "");
+
+                            if(nearestWareHouse != null && requiredWareHouse != null){
+                                Locator locator = new Locator();
+                                locator.initiator(nearestWareHouse,requiredWareHouse);
+                            }
+//
+//                            Toast.makeText(MainActivity.this, latitude + " " + longitude, Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, Looper.getMainLooper());
