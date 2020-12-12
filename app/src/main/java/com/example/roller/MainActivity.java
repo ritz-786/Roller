@@ -19,16 +19,12 @@ import androidx.core.content.ContextCompat;
 import com.example.roller.domain.House;
 import com.example.roller.domain.LocatedAt;
 import com.example.roller.domain.Product;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
-import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
@@ -99,6 +95,7 @@ public class MainActivity extends AppCompatActivity
     public void Info_User(HashMap<String, Integer> User_Info) {
         Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show();
         User_Fragment_Data = User_Info;
+        orderedProducts.clear();
         List<Product> products = Data.getProducts();
 
         if (User_Info.get("Shoe") > 0)
@@ -183,10 +180,10 @@ public class MainActivity extends AppCompatActivity
 
                             House requiredWareHouse = Data.findWareHouse(orderedProducts, new LocatedAt(latitude, longitude));
                             House nearestWareHouse = Data.findNearestWareHouse(new LocatedAt(latitude, longitude));
-                            Log.d(TAG, " " + requiredWareHouse.getCity() + " " + nearestWareHouse.getCity());
-
-                            Log.d(TAG, requiredWareHouse + "");
-                            Log.d(TAG, nearestWareHouse + "");
+//                            Log.d(TAG, " " + requiredWareHouse.getCity() + " " + nearestWareHouse.getCity());
+//
+//                            Log.d(TAG, requiredWareHouse + "");
+//                            Log.d(TAG, nearestWareHouse + "");
 
                             if (nearestWareHouse != null && requiredWareHouse != null) {
                                 Locator locator = new Locator();
@@ -194,12 +191,14 @@ public class MainActivity extends AppCompatActivity
                                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
                                 Order_info ord = Data.lastOrder();
                                 int ordLen = 0;
-                                if(ord != null)
+                                if (ord != null)
                                     ordLen = ord.getId();
 
-                                Order_info order_info = new Order_info(ordLen+1,orderedProducts, String.valueOf(timestamp), path);
+                                Order_info order_info = new Order_info(ordLen + 1, orderedProducts, String.valueOf(timestamp), path);
 
                                 Data.addOrder(order_info);
+                            }else{
+                                Toast.makeText(MainActivity.this, "Nahi hua", Toast.LENGTH_SHORT).show();
                             }
 //
 //                            Toast.makeText(MainActivity.this, latitude + " " + longitude, Toast.LENGTH_SHORT).show();

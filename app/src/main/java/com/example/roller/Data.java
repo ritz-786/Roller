@@ -246,7 +246,7 @@ public class Data {
         return nearestHouse;
     }
 
-    public static House CancelOrder(Order_info order) {
+    public static House CancelOrder(Order_info order,int position) {
         Log.d("Order", order.toString());
         Timestamp initialTime = Timestamp.valueOf(order.getOrder_time());
         Timestamp finalTime = new Timestamp(System.currentTimeMillis());
@@ -272,6 +272,7 @@ public class Data {
             assert one != null;
 
             if(end == -1){
+                orders.remove(position);
                 Log.d("After Cancel Go To ", "" + one);
                 return  one;
             }
@@ -284,6 +285,7 @@ public class Data {
                 distanceCovered -= distance;
                 i++;
             }else{
+                orders.remove(position);
                 Log.d("After Cancel Go To ", "" + other);
                 return other;
             }

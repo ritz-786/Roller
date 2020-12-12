@@ -33,11 +33,7 @@ public class adapterRecycerView extends RecyclerView.Adapter<adapterRecycerView.
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
         holder.id.setText(String.valueOf(arrayList.get(position).getId()));
         holder.time.setText(arrayList.get(position).getOrder_time());
-        holder.cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
+        holder.cancel.setOnClickListener(view -> Data.CancelOrder(arrayList.get(position),position));
     }
     @Override
     public int getItemCount() {
