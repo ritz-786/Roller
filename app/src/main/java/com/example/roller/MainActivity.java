@@ -71,15 +71,18 @@ public class MainActivity extends AppCompatActivity
 
         switch (item.getItemId()) {
             case R.id.user:
+                setTitle("Order items");
                 userFragment.getContext(MainActivity.this);
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, userFragment).commit();
                 return true;
 
             case R.id.warehouse:
+                setTitle("Warehouses");
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, warehouseFragment).commit();
                 return true;
 
             case R.id.retailer:
+                setTitle("Order history");
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, retailerFragment).commit();
                 return true;
         }

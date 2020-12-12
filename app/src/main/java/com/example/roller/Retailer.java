@@ -29,7 +29,7 @@ public class Retailer extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         ArrayList<Order_info> arrayList = (ArrayList<Order_info>) Data.getOrders();
         Log.d(TAG, "onCreateView:---------------    "+arrayList.size());
-        Log.d(TAG, "onCreateView: -----  "+arrayList.get(0).getId());
+//        Log.d(TAG, "onCreateView: -----  "+arrayList.get(0).getId());
         adapterRecycerView adapte= new adapterRecycerView(arrayList);
         recyclerView.setAdapter(adapte);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
