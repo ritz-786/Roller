@@ -24,7 +24,12 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
 import java.sql.Time;
@@ -74,10 +79,10 @@ public class MainActivity extends AppCompatActivity
                 return true;
 
             case R.id.warehouse:
-                Gson gson = new Gson();
-                String json = sharedPref.getString("order_info","");
-                Ordere_info obj = gson.fromJson(json, Ordere_info.class);
-                Log.d(TAG, "onNavigationItemSelected:             "+ obj.getOrder_path()+"    -----------");
+//                Gson gson = new Gson();
+//                String json = sharedPref.getString("order_info","");
+//                Ordere_info obj = gson.fromJson(json, Ordere_info.class);
+//                Log.d(TAG, "onNavigationItemSelected:             "+ obj.getOrder_path()+"    -----------");
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, warehouseFragment).commit();
                 return true;
 
@@ -180,7 +185,7 @@ public class MainActivity extends AppCompatActivity
                             double latitude = locationResult.getLocations().get(latestLocationIndex).getLatitude();
                             double longitude = locationResult.getLocations().get(latestLocationIndex).getLongitude();
 
-                            Log.d(TAG, orderedProducts + "");
+//                            Log.d(TAG, orderedProducts + "");
 
                             House requiredWareHouse = Data.findWareHouse(orderedProducts, new LocatedAt(latitude, longitude));
                             House nearestWareHouse = Data.findNearestWareHouse(new LocatedAt(latitude, longitude));
@@ -193,23 +198,36 @@ public class MainActivity extends AppCompatActivity
                                 Locator locator = new Locator();
                                 String path = ""+locator.initiator(nearestWareHouse,requiredWareHouse);
                                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-                                Ordere_info ordere_info = new Ordere_info(orderedProducts ,String.valueOf(timestamp) , path);
+                                Ordere_info ordere_info = new Ordere_info(orderedProducts ,timestamp.toString() , path);
 
-
-                                SharedPreferences.Editor editor = sharedPref.edit();
-                                Gson gson = new Gson();
-                                String convert = gson.toJson(ordere_info);
-                                editor.putString("order_info",convert);
-                                editor.apply();
-                                Log.d("Path:=", path);
-
-                            }
+//                                FirebaseDatabase database = FirebaseDatabase.getInstance();
+//                                DatabaseReference myRef = database.getReference("Roller").child("Order");
+//                                SharedPreferences.Editor editor =sharedPref.edit();
+//                                int id=0;
+//                                int id_updated= sharedPref.getInt("id", id);
 //
-//                            Toast.makeText(MainActivity.this, latitude + " " + longitude, Toast.LENGTH_SHORT).show();
+//                                editor.putInt("id",id_updated+1);
+//                                HashMap<Integer, Object> saved_Order = new HashMap<>();
+//                                saved_Order.put(id_updated,ordere_info);
+//                                myRef.setValue(saved_Order).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                    @Override
+//                                    public void onComplete(@NonNull Task<Void> task) {
+//                                        if(task.isSuccessful()){
+//                                            Toast.makeText(MainActivity.this, "Succesfully Ordered", Toast.LENGTH_SHORT).show();
+//                                        }
+//                                    }
+//                                })
+//                                .addOnFailureListener(new OnFailureListener() {
+//                                    @Override
+//                                    public void onFailure(@NonNull Exception e) {
+//                                        Toast.makeText(MainActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+//                                    }
+//                                });
+                                Log.d("Path:=", path);
+                            }
                         }
                     }
                 }, Looper.getMainLooper());
-
     }
 
 }
