@@ -25,6 +25,8 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
 import java.sql.Time;
@@ -74,10 +76,6 @@ public class MainActivity extends AppCompatActivity
                 return true;
 
             case R.id.warehouse:
-                Gson gson = new Gson();
-                String json = sharedPref.getString("order_info","");
-                Ordere_info obj = gson.fromJson(json, Ordere_info.class);
-                Log.d(TAG, "onNavigationItemSelected:             "+ obj.getOrder_path()+"    -----------");
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, warehouseFragment).commit();
                 return true;
 
@@ -193,14 +191,15 @@ public class MainActivity extends AppCompatActivity
                                 Locator locator = new Locator();
                                 String path = ""+locator.initiator(nearestWareHouse,requiredWareHouse);
                                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-                                Ordere_info ordere_info = new Ordere_info(orderedProducts ,String.valueOf(timestamp) , path);
+                                int ordLen = Data.getOrders().size();
+                                Order_info order_info = new Order_info(ordLen+1,orderedProducts, String.valueOf(timestamp), path);
 
-
-                                SharedPreferences.Editor editor = sharedPref.edit();
-                                Gson gson = new Gson();
-                                String convert = gson.toJson(ordere_info);
-                                editor.putString("order_info",convert);
-                                editor.apply();
+                                Data.addOrder(order_info);
+//                                SharedPreferences.Editor editor = sharedPref.edit();
+//                                Gson gson = new Gson();
+//                                String convert = gson.toJson(order_info);
+//                                editor.putString("order_info",convert);
+//                                editor.apply();
                                 Log.d("Path:=", path);
 
                             }
