@@ -8,6 +8,7 @@ import com.example.roller.domain.Product;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,27 +16,38 @@ import java.util.List;
 public class Data {
 
     public static HashMap<Integer, List<Node>> adj = new HashMap<>();
-    public static HashMap<String,House> directory = new HashMap<>();
-    static List<Order_info> orders = new ArrayList<>();
+    public static HashMap<String, House> directory = new HashMap<>();
+    public static HashMap<Integer,House> idDirectory = new HashMap<>();
 
-    public static List<Order_info> getOrders(){
+    static List<Order_info> orders = new ArrayList<>();
+    public static long speed = 60; // km/hr
+
+    public static List<Order_info> getOrders() {
         return orders;
     }
 
-    public static void addOrder(Order_info order){
+    public static void addOrder(Order_info order) {
         orders.add(order);
+    }
+
+    public static Order_info lastOrder(){
+        int size = orders.size();
+        if(size>0)
+            return orders.get(size-1);
+        else
+            return null;
     }
 
     public static List<Product> getProducts() {
         List<Product> products = new ArrayList<>();
         String uri = "@drawable/x";
-        Product shoes = new Product(uri,"Shoes",8);
-        Product watch = new Product(uri,"Watch",10);
-        Product shirt = new Product(uri,"Shirt",7);
-        Product belt = new Product(uri,"Belt",3);
-        Product pant = new Product(uri,"Trousers",7);
-        Product socks = new Product(uri,"Socks",5);
-        Product laptop = new Product(uri,"Laptop",20);
+        Product shoes = new Product(uri, "Shoes", 8);
+        Product watch = new Product(uri, "Watch", 10);
+        Product shirt = new Product(uri, "Shirt", 7);
+        Product belt = new Product(uri, "Belt", 3);
+        Product pant = new Product(uri, "Trousers", 7);
+        Product socks = new Product(uri, "Socks", 5);
+        Product laptop = new Product(uri, "Laptop", 20);
 
         products.add(shoes);
         products.add(watch);
@@ -53,44 +65,44 @@ public class Data {
         List<House> houses = new ArrayList<>();
         List<Product> products = getProducts();
 
-        HashMap<Product,Integer> productsMap = new HashMap<>();
-        productsMap.put(products.get(0),10);
-        productsMap.put(products.get(1),8);
+        HashMap<Product, Integer> productsMap = new HashMap<>();
+        productsMap.put(products.get(0), 10);
+        productsMap.put(products.get(1), 8);
 
-        houses.add(new House(0, new LocatedAt(25.566666666666666, 84.53333333333333), "Arrah", "Bihar",productsMap));
-
-        productsMap = new HashMap<>();
-        productsMap.put(products.get(2),7);
-        productsMap.put(products.get(3),5);
-
-        houses.add(new House(1, new LocatedAt(24.75, 84.41666666666667), "Aurangabad", "Bihar",productsMap));
+        houses.add(new House(0, new LocatedAt(25.566666666666666, 84.53333333333333), "Arrah", "Bihar", productsMap));
 
         productsMap = new HashMap<>();
-        productsMap.put(products.get(4),2);
-        productsMap.put(products.get(5),4);
-        houses.add(new House(2, new LocatedAt(25.666666666666668, 85.2), "Bankipore", "Bihar",productsMap));
+        productsMap.put(products.get(2), 7);
+        productsMap.put(products.get(3), 5);
+
+        houses.add(new House(1, new LocatedAt(24.75, 84.41666666666667), "Aurangabad", "Bihar", productsMap));
 
         productsMap = new HashMap<>();
-        productsMap.put(products.get(3),10);
-        productsMap.put(products.get(4),6);
-        houses.add(new House(31, new LocatedAt(25.616666666666667, 85.21666666666667), "Patna", "Bihar",productsMap));
+        productsMap.put(products.get(4), 2);
+        productsMap.put(products.get(5), 4);
+        houses.add(new House(2, new LocatedAt(25.666666666666668, 85.2), "Bankipore", "Bihar", productsMap));
 
         productsMap = new HashMap<>();
-        productsMap.put(products.get(0),4);
-        productsMap.put(products.get(2),5);
-        houses.add(new House(41, new LocatedAt(28.7041, 77.1025), "Delhi", "Delhi",productsMap));
+        productsMap.put(products.get(3), 10);
+        productsMap.put(products.get(4), 6);
+        houses.add(new House(31, new LocatedAt(25.616666666666667, 85.21666666666667), "Patna", "Bihar", productsMap));
 
         productsMap = new HashMap<>();
-        productsMap.put(products.get(4),8);
-        houses.add(new House(51, new LocatedAt(19.0760, 72.8777), "mumbai", "Maharashtra",productsMap));
+        productsMap.put(products.get(0), 4);
+        productsMap.put(products.get(2), 5);
+        houses.add(new House(41, new LocatedAt(28.7041, 77.1025), "Delhi", "Delhi", productsMap));
 
         productsMap = new HashMap<>();
-        productsMap.put(products.get(6),5);
-        houses.add(new House(61, new LocatedAt(22.5726, 88.3639), "Kolkata", "West Bengal",productsMap));
+        productsMap.put(products.get(4), 8);
+        houses.add(new House(51, new LocatedAt(19.0760, 72.8777), "mumbai", "Maharashtra", productsMap));
 
         productsMap = new HashMap<>();
-        productsMap.put(products.get(6),10);
-        houses.add(new House(71, new LocatedAt(12.9716, 77.5946), "Bengaluru", "Karnataka",productsMap));
+        productsMap.put(products.get(6), 5);
+        houses.add(new House(61, new LocatedAt(22.5726, 88.3639), "Kolkata", "West Bengal", productsMap));
+
+        productsMap = new HashMap<>();
+        productsMap.put(products.get(6), 10);
+        houses.add(new House(71, new LocatedAt(12.9716, 77.5946), "Bengaluru", "Karnataka", productsMap));
 
 
 //        houses.add(new House(3, new LocatedAt(23.166666666666668, 84.21666666666667), "Barwa", "Bihar"));
@@ -134,83 +146,81 @@ public class Data {
         return houses;
     }
 
-    private static HashMap<String,House> getIdByCity(){
-        HashMap<String,House> directory = new HashMap<>();
-        for(House house: getHouses()){
-            directory.put(house.getCity().toLowerCase(),house);
+    private static void getIdByCity() {
+        for (House house : getHouses()) {
+            directory.put(house.getCity().toLowerCase(), house);
+            idDirectory.put(house.getId(),house);
         }
-        return directory;
     }
 
-    private static void connectCities(String parent,String child){
+    private static void connectCities(String parent, String child) {
         try {
             House h = directory.get(parent);
             House h1 = directory.get(child);
             assert h != null;
             assert h1 != null;
-            Node newNode = new Node(h1.getId(),Util.findDistance(h.getLocation(),h1.getLocation()));
-            Node newNode1 = new Node(h.getId(),Util.findDistance(h.getLocation(),h1.getLocation()));
+            Node newNode = new Node(h1.getId(), Util.findDistance(h.getLocation(), h1.getLocation()));
+            Node newNode1 = new Node(h.getId(), Util.findDistance(h.getLocation(), h1.getLocation()));
             List<Node> n = adj.get(h.getId());
             List<Node> m = adj.get(h1.getId());
-            if(n==null){
+            if (n == null) {
                 n = new ArrayList<>();
             }
-            if(m==null)
+            if (m == null)
                 m = new ArrayList<>();
             n.add(newNode);
             m.add(newNode1);
-            adj.put(h.getId(),n);
-            adj.put(h1.getId(),m);
+            adj.put(h.getId(), n);
+            adj.put(h1.getId(), m);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void connecting(){
-        directory = getIdByCity();
-        connectCities("arrah","patna");
-        connectCities("aurangabad","patna");
-        connectCities("bankipore","patna");
+    public static void connecting() {
+        getIdByCity();
+        connectCities("arrah", "patna");
+        connectCities("aurangabad", "patna");
+        connectCities("bankipore", "patna");
 
 
+        connectCities("delhi", "patna");
+        connectCities("mumbai", "patna");
+        connectCities("kolkata", "patna");
+        connectCities("bengaluru", "patna");
 
-        connectCities("delhi","patna");
-        connectCities("mumbai","patna");
-        connectCities("kolkata","patna");
-        connectCities("bengaluru","patna");
+        connectCities("mumbai", "delhi");
+        connectCities("kolkata", "delhi");
+        connectCities("bengaluru", "delhi");
 
-        connectCities("mumbai","delhi");
-        connectCities("kolkata","delhi");
-        connectCities("bengaluru","delhi");
+        connectCities("kolkata", "mumbai");
+        connectCities("bengaluru", "mumbai");
 
-        connectCities("kolkata","mumbai");
-        connectCities("bengaluru","mumbai");
-
-        connectCities("bengaluru","kolkata");
+        connectCities("bengaluru", "kolkata");
     }
 
-    public static House findWareHouse(@NotNull HashMap<Product,Integer> orderedProducts, LocatedAt userLocation){
+    public static House findWareHouse(@NotNull HashMap<Product, Integer> orderedProducts, LocatedAt userLocation) {
         int totalProductsSize = orderedProducts.size();
         House nearestWareHouse = null;
         float earlierDistance = Float.MAX_VALUE;
 
-        for(House house: getHouses()){
+        for (House house : getHouses()) {
             int cnt = 0;
-            HashMap<Product,Integer> products = house.getProducts();
+            HashMap<Product, Integer> products = house.getProducts();
 
-            for(Product key: orderedProducts.keySet()){
-                if(products.get(key) != null && products.get(key) >= orderedProducts.get(key)){
+            for (Product key : orderedProducts.keySet()) {
+                if (products.get(key) != null && products.get(key) >= orderedProducts.get(key)) {
                     cnt++;
                 }
             }
 
-            if(cnt == totalProductsSize){
-                if(nearestWareHouse == null){
+            if (cnt == totalProductsSize) {
+                if (nearestWareHouse == null) {
                     nearestWareHouse = house;
-                    earlierDistance = Util.findDistance(nearestWareHouse.getLocation(),userLocation);
-                }else {
-                    float newDistance = Util.findDistance(house.getLocation(),userLocation);
-                    if(newDistance < earlierDistance){
+                    earlierDistance = Util.findDistance(nearestWareHouse.getLocation(), userLocation);
+                } else {
+                    float newDistance = Util.findDistance(house.getLocation(), userLocation);
+                    if (newDistance < earlierDistance) {
                         nearestWareHouse = house;
                         earlierDistance = newDistance;
                     }
@@ -221,18 +231,63 @@ public class Data {
         return nearestWareHouse;
     }
 
-    public static House findNearestWareHouse(LocatedAt userLocation){
+    public static House findNearestWareHouse(LocatedAt userLocation) {
         House nearestHouse = null;
         float earlierDistance = Float.MAX_VALUE;
 
-        for(House house : getHouses()){
-            float newDistance = Util.findDistance(house.getLocation(),userLocation);
-            if(newDistance < earlierDistance){
+        for (House house : getHouses()) {
+            float newDistance = Util.findDistance(house.getLocation(), userLocation);
+            if (newDistance < earlierDistance) {
                 nearestHouse = house;
                 earlierDistance = newDistance;
             }
         }
 
         return nearestHouse;
+    }
+
+    public static House CancelOrder(Order_info order) {
+        Log.d("Order", order.toString());
+        Timestamp initialTime = Timestamp.valueOf(order.getOrder_time());
+        Timestamp finalTime = new Timestamp(System.currentTimeMillis());
+
+        long difference = finalTime.getTime() - initialTime.getTime();
+        difference /= 1000; // In Seconds
+
+        difference /= 3600; // In Hours
+
+        long distanceCovered = speed * difference;
+        String path = order.getOrder_path().trim();
+        Log.d("Path", path);
+
+        String[] pathArray = path.split("->");
+
+        for(int i=0;i<pathArray.length;){
+            int start = Integer.parseInt(pathArray[i]);
+            int end = -1;
+            if(i+1 < pathArray.length)
+                end = Integer.parseInt(pathArray[i+1]);
+
+            House one = idDirectory.get(start);
+            assert one != null;
+
+            if(end == -1){
+                Log.d("After Cancel Go To ", "" + one);
+                return  one;
+            }
+
+            House other = idDirectory.get(end);
+            assert other != null;
+
+            float distance = Util.findDistance(one.getLocation(),other.getLocation());
+            if(distanceCovered > distance){
+                distanceCovered -= distance;
+                i++;
+            }else{
+                Log.d("After Cancel Go To ", "" + other);
+                return other;
+            }
+        }
+        return null;
     }
 }

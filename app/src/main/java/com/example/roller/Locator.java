@@ -142,7 +142,10 @@ class Djikstra {
         }
         printPath(parents.get(currentVertex), parents);
         System.out.print(currentVertex + " ");
-        path = currentVertex + "-> " + path;
+        if(path.equals(""))
+            path = currentVertex + "";
+        else
+            path = currentVertex + "->" + path;
     }
 }
 

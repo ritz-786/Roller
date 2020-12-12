@@ -189,7 +189,11 @@ public class MainActivity extends AppCompatActivity
                                 Locator locator = new Locator();
                                 String path = "" + locator.initiator(nearestWareHouse, requiredWareHouse);
                                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-                                int ordLen = Data.getOrders().size();
+                                Order_info ord = Data.lastOrder();
+                                int ordLen = 0;
+                                if(ord != null)
+                                    ordLen = ord.getId();
+
                                 Order_info order_info = new Order_info(ordLen+1,orderedProducts, String.valueOf(timestamp), path);
 
                                 Data.addOrder(order_info);
