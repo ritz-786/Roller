@@ -1,7 +1,6 @@
 package com.example.roller;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -20,16 +19,16 @@ import androidx.core.content.ContextCompat;
 import com.example.roller.domain.House;
 import com.example.roller.domain.LocatedAt;
 import com.example.roller.domain.Product;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-import java.sql.Time;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity
     Retailer retailerFragment;
     Warehouse warehouseFragment;
     HashMap<String, Integer> User_Fragment_Data;
-    SharedPreferences sharedPref ;
+    SharedPreferences sharedPref;
 
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
 
@@ -57,7 +56,6 @@ public class MainActivity extends AppCompatActivity
         userFragment = new User();
         retailerFragment = new Retailer();
         warehouseFragment = new Warehouse();
-
 
         bnv = findViewById(R.id.bottom_navigation_view);
         bnv.setOnNavigationItemSelectedListener(this);
@@ -150,7 +148,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void getCurrentLocation(HashMap<Product,Integer> orderedProducts) {
+    private void getCurrentLocation(HashMap<Product, Integer> orderedProducts) {
         LocationRequest locationRequest = new LocationRequest();
         locationRequest.setInterval(10000);
         locationRequest.setFastestInterval(3000);
@@ -190,9 +188,9 @@ public class MainActivity extends AppCompatActivity
                             Log.d(TAG, requiredWareHouse + "");
                             Log.d(TAG, nearestWareHouse + "");
 
-                            if(nearestWareHouse != null && requiredWareHouse != null){
+                            if (nearestWareHouse != null && requiredWareHouse != null) {
                                 Locator locator = new Locator();
-                                String path = ""+locator.initiator(nearestWareHouse,requiredWareHouse);
+                                String path = "" + locator.initiator(nearestWareHouse, requiredWareHouse);
                                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
                                 Order_info ord = Data.lastOrder();
                                 int ordLen = 0;
@@ -202,13 +200,6 @@ public class MainActivity extends AppCompatActivity
                                 Order_info order_info = new Order_info(ordLen+1,orderedProducts, String.valueOf(timestamp), path);
 
                                 Data.addOrder(order_info);
-//                                SharedPreferences.Editor editor = sharedPref.edit();
-//                                Gson gson = new Gson();
-//                                String convert = gson.toJson(order_info);
-//                                editor.putString("order_info",convert);
-//                                editor.apply();
-                                Log.d("Path:=", path);
-
                             }
 //
 //                            Toast.makeText(MainActivity.this, latitude + " " + longitude, Toast.LENGTH_SHORT).show();
