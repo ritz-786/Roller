@@ -16,6 +16,15 @@ public class Data {
 
     public static HashMap<Integer, List<Node>> adj = new HashMap<>();
     public static HashMap<String,House> directory = new HashMap<>();
+    static List<Order_info> orders = new ArrayList<>();
+
+    public static List<Order_info> getOrders(){
+        return orders;
+    }
+
+    public static void addOrder(Order_info order){
+        orders.add(order);
+    }
 
     public static List<Product> getProducts() {
         List<Product> products = new ArrayList<>();
