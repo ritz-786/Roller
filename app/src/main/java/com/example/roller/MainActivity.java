@@ -1,7 +1,9 @@
 package com.example.roller;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Looper;
@@ -23,7 +25,10 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,6 +41,7 @@ public class MainActivity extends AppCompatActivity
     Retailer retailerFragment;
     Warehouse warehouseFragment;
     HashMap<String, Integer> User_Fragment_Data;
+    SharedPreferences sharedPref ;
 
     private static final int REQUEST_CODE_LOCATION_PERMISSION = 1;
 
@@ -44,6 +50,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        sharedPref = getPreferences(MODE_PRIVATE);
         User_Fragment_Data = new HashMap<>();
         userFragment = new User();
         retailerFragment = new Retailer();
@@ -67,6 +74,10 @@ public class MainActivity extends AppCompatActivity
                 return true;
 
             case R.id.warehouse:
+                Gson gson = new Gson();
+                String json = sharedPref.getString("order_info","");
+                Ordere_info obj = gson.fromJson(json, Ordere_info.class);
+                Log.d(TAG, "onNavigationItemSelected:             "+ obj.getOrder_path()+"    -----------");
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, warehouseFragment).commit();
                 return true;
 
@@ -180,8 +191,18 @@ public class MainActivity extends AppCompatActivity
 
                             if(nearestWareHouse != null && requiredWareHouse != null){
                                 Locator locator = new Locator();
-                                String path = locator.initiator(nearestWareHouse,requiredWareHouse);
+                                String path = ""+locator.initiator(nearestWareHouse,requiredWareHouse);
+                                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                                Ordere_info ordere_info = new Ordere_info(orderedProducts ,String.valueOf(timestamp) , path);
+
+
+                                SharedPreferences.Editor editor = sharedPref.edit();
+                                Gson gson = new Gson();
+                                String convert = gson.toJson(ordere_info);
+                                editor.putString("order_info",convert);
+                                editor.apply();
                                 Log.d("Path:=", path);
+
                             }
 //
 //                            Toast.makeText(MainActivity.this, latitude + " " + longitude, Toast.LENGTH_SHORT).show();
@@ -190,4 +211,5 @@ public class MainActivity extends AppCompatActivity
                 }, Looper.getMainLooper());
 
     }
+
 }

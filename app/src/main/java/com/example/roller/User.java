@@ -115,7 +115,6 @@ public class User extends Fragment {
                 userInfo.Info_User(hashMap);
             }
         });
-
         return view;
     }
 
